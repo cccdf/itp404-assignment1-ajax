@@ -1,12 +1,28 @@
+var $loading = $('#loader').hide();
+$(document)
+.ajaxStart(function () {
+    $loading.show();
+  })
+  .ajaxStop(function () {
+    $loading.hide();
+  });
+  
 $('#searchForm').submit(function(){
     $('#results').html('Loading...');
     
+
     var form = $(this);
     var searchTerm = $('#searchItem').val();
     let promise = $.ajax({
         type: 'GET',
         url: 'https://www.reddit.com/r/subreddits/search.json',
-        data: {q: searchTerm}
+        data: {q: searchTerm},
+        beforeSend: function(){
+            $('#loader').show();
+        },
+        complete: function(){
+            $('#loader').hide();
+        }
     });
 
     promise.then(function(responseData) {
@@ -37,6 +53,7 @@ $('#searchForm').submit(function(){
             div.append(p1);
             fragment.append(div);
         });
+        
         $('#results').html(fragment);    
     });
 });
