@@ -11,8 +11,6 @@ $('#searchForm').submit(function(event){
     event.preventDefault();
     $('#results').html('Loading...');
     
-
-    var form = $(this);
     var searchTerm = $('#searchItem').val();
     let promise = $.ajax({
         type: 'GET',
@@ -27,14 +25,7 @@ $('#searchForm').submit(function(event){
     });
 
     promise.then(function(responseData) {
-        if (responseData.data.children.length > 0) {
-        console.log('# of results: ' + responseData.data.children.length);
-        $.each(responseData.data.children, function(idx, searchResult) {
-        console.log("--- Title of Subreddit: " + searchResult.data.title);
-                        });
-                    } else {
-        console.log("No subreddits match the search query!");
-                    }
+        
         let fragment = document.createDocumentFragment();
         let html = '';
         $.each(responseData.data.children, function(idx, searchResult){
