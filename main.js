@@ -7,7 +7,8 @@ $(document)
     $loading.hide();
   });
   
-$('#searchForm').submit(function(){
+$('#searchForm').submit(function(event){
+    event.preventDefault();
     $('#results').html('Loading...');
     
 
